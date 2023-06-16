@@ -28,6 +28,7 @@ func check(t *testing.T, groups []int, ck *Clerk) {
 		for s, g := range c.Shards {
 			_, ok := c.Groups[g]
 			if ok == false {
+				print("error")
 				t.Fatalf("shard %v -> invalid group %v", s, g)
 			}
 		}

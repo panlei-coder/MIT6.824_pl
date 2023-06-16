@@ -713,11 +713,8 @@ func (rf *Raft) sendElection() {
 				rf.mu.Unlock()
 				return
 			}
-
 		}(i)
-
 	}
-
 }
 
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
@@ -1236,6 +1233,7 @@ func (rf *Raft) GetRaftStateSize() int {
 // term. the third return value is true if this server believes it is
 // the leader.
 //
+// 将command添加到日志中
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	// Your code here (2B).
