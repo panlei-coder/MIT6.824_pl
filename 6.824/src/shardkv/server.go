@@ -483,6 +483,7 @@ func (kv *ShardKV) configDetectedLoop() {
 
 							// 如果返回了OK或者是超时了就进行GC操作，删除掉不属于自己的shard
 							//（todo ？ 这个超时感觉不合理，超时没有将shard发送给对应的servers就将shard从当前的servers删除掉，不会造成shard丢失么？）
+							// 如果分片在一定的时间内没有转移成功，就认为当前这个分片被丢失掉了，所以这里设置了超时机制，即超过设定的时间，还未收到分片转移成功的通知，就认为该分片丢失了s
 							if (ok && reply.Err == OK) || time.Now().Sub(start) > 2*time.Second { // || time.Now().Sub(start) > 2*time.Second
 								kv.mu.Lock()
 								op := Op{
